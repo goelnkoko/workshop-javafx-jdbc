@@ -1,4 +1,4 @@
-package com.nkumbo.workshopjavafxjbdc;
+package com.nkumbo.workshopjavafxjbdc.gui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

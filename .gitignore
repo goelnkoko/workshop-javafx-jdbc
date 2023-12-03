@@ -36,3 +36,12 @@ build/
 
 ### Mac OS ###
 .DS_Store
+
+# build folders 
+bin/ 
+target/ 
+nbproject/private/ 
+build/ 
+nbbuild/ 
+dist/ 
+nbdist/

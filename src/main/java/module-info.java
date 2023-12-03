@@ -10,6 +10,8 @@ module com.nkumbo.workshopjavafxjbdc {
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
 
-    opens com.nkumbo.workshopjavafxjbdc to javafx.fxml;
-    exports com.nkumbo.workshopjavafxjbdc;
+    exports com.nkumbo.workshopjavafxjbdc.gui;
+    opens com.nkumbo.workshopjavafxjbdc.gui to javafx.fxml;
+    exports com.nkumbo.workshopjavafxjbdc.application;
+    opens com.nkumbo.workshopjavafxjbdc.application to javafx.fxml;
 }
