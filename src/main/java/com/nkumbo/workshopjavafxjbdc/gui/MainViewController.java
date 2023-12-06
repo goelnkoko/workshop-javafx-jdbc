@@ -2,6 +2,7 @@ package com.nkumbo.workshopjavafxjbdc.gui;
 
 import com.nkumbo.workshopjavafxjbdc.application.Main;
 import com.nkumbo.workshopjavafxjbdc.gui.util.Alerts;
+import com.nkumbo.workshopjavafxjbdc.model.services.DepartmentService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -34,7 +35,7 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void onMenuItemDepartmentAction(){
-        loadView("/com/nkumbo/workshopjavafxjbdc/gui/DepartmentList.fxml");
+        loadView2("/com/nkumbo/workshopjavafxjbdc/gui/DepartmentList.fxml");
     }
 
     @FXML
@@ -58,6 +59,28 @@ public class MainViewController implements Initializable {
             mainVBox.getChildren().clear();
             mainVBox.getChildren().add(mainMenu);
             mainVBox.getChildren().addAll(newVBox.getChildren());
+        }
+        catch(IOException e){
+            Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    private synchronized void loadView2(String aN){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(aN));
+            VBox newVBox = fxmlLoader.load();
+
+            Scene mainScene = Main.getMainScene();
+            VBox mainVBox = (VBox) ((ScrollPane) mainScene.getRoot()).getContent();
+
+            Node mainMenu = mainVBox.getChildren().get(0);
+            mainVBox.getChildren().clear();
+            mainVBox.getChildren().add(mainMenu);
+            mainVBox.getChildren().addAll(newVBox.getChildren());
+
+            DepartmentListController controller = fxmlLoader.getController();
+            controller.setDepartmentService(new DepartmentService());
+            controller.updateTableView();
         }
         catch(IOException e){
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
