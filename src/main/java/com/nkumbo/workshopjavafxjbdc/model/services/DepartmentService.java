@@ -1,5 +1,7 @@
 package com.nkumbo.workshopjavafxjbdc.model.services;
 
+import com.nkumbo.workshopjavafxjbdc.model.dao.DaoFactory;
+import com.nkumbo.workshopjavafxjbdc.model.dao.DepartmentDao;
 import com.nkumbo.workshopjavafxjbdc.model.entities.Department;
 
 import java.util.ArrayList;
@@ -7,13 +9,9 @@ import java.util.List;
 
 public class DepartmentService {
 
+    private DepartmentDao dao = DaoFactory.createDepartmentDao();
+
     public List<Department> findAll(){
-        List<Department> list = new ArrayList<>();
-
-        list.add(new Department(1, "Books"));
-        list.add(new Department(2, "Computers"));
-        list.add(new Department(3, "Electronics"));
-
-        return list;
+        return dao.findAll();
     }
 }

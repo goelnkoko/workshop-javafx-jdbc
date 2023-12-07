@@ -9,6 +9,7 @@ module com.nkumbo.workshopjavafxjbdc {
     requires org.kordamp.ikonli.javafx;
     requires org.kordamp.bootstrapfx.core;
     requires eu.hansolo.tilesfx;
+    requires java.sql;
 
     exports com.nkumbo.workshopjavafxjbdc.gui;
     opens com.nkumbo.workshopjavafxjbdc.gui to javafx.fxml;
