@@ -34,6 +34,7 @@
                   <Button fx:id="btCancel" mnemonicParsing="false" onAction="#onBtCancelAction" text="Cancel" />
                </children>
             </HBox>
+            <Label fx:id="labelErrorId" textFill="RED" GridPane.columnIndex="2" />
          </children>
       </GridPane>
    </children>

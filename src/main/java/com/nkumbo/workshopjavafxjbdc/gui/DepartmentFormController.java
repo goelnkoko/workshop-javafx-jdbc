@@ -5,6 +5,7 @@ import com.nkumbo.workshopjavafxjbdc.gui.listeners.DataChangeListener;
 import com.nkumbo.workshopjavafxjbdc.gui.util.Alerts;
 import com.nkumbo.workshopjavafxjbdc.gui.util.Constraints;
 import com.nkumbo.workshopjavafxjbdc.gui.util.Utils;
+import com.nkumbo.workshopjavafxjbdc.model.dao.impl.DepartmentDaoJDBC;
 import com.nkumbo.workshopjavafxjbdc.model.entities.Department;
 import com.nkumbo.workshopjavafxjbdc.model.exceptions.ValidationException;
 import com.nkumbo.workshopjavafxjbdc.model.services.DepartmentService;
@@ -24,6 +25,7 @@ public class DepartmentFormController implements Initializable {
     private Department entity;
     private DepartmentService service;
     private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
+    private Boolean editable;
 
     @FXML
     private TextField txtId;
@@ -32,6 +34,9 @@ public class DepartmentFormController implements Initializable {
 
     @FXML
     private Label labelErrorName;
+    @FXML
+    private Label labelErrorId;
+
     @FXML
     private Button btSave;
 
@@ -44,6 +49,15 @@ public class DepartmentFormController implements Initializable {
 
     public void setDepartmentService(DepartmentService service) {
         this.service = service;
+    }
+
+    public void setTxtIdEditable(Boolean editable) {
+        this.editable = editable;
+        txtId.setEditable(editable);
+    }
+
+    public Boolean getTxtIdEditable(){
+        return editable;
     }
 
     public void subscribeDataChangeListener(DataChangeListener listener){
@@ -60,6 +74,7 @@ public class DepartmentFormController implements Initializable {
         }
 
         try{
+            labelsErrorClean();
             entity = getFormData();
             service.saveOrUpdate(entity);
             notifyDataChangeListeners();
@@ -71,7 +86,11 @@ public class DepartmentFormController implements Initializable {
         catch (ValidationException e){
             setErrorMessages(e.getErrors());
         }
+    }
 
+    private void labelsErrorClean() {
+        labelErrorId.setText("");
+        labelErrorName.setText("");
     }
 
     private void notifyDataChangeListeners() {
@@ -81,18 +100,31 @@ public class DepartmentFormController implements Initializable {
     }
 
     private Department getFormData() {
+
         Department obj = new Department();
 
         ValidationException exception = new ValidationException("Validation error");
 
-        obj.setId(Utils.tryParseToInt(txtId.getText()));
+        Integer id = Utils.tryParseToInt(txtId.getText());
+
+        if(getTxtIdEditable()){
+            obj = service.findById(id);
+            if(obj == null){
+                exception.addError("id", "Unknown department");
+            }
+        }
+
         if(txtName.getText() == null || txtName.getText().trim().equals("")){
             exception.addError("name", "Field can't be empty");
         }
-        obj.setName(txtName.getText());
+
         if(exception.getErrors().size() > 0){
             throw exception;
         }
+
+        obj.setId(id);
+        obj.setName(txtName.getText());
+
 
         return obj;
     }
@@ -112,6 +144,7 @@ public class DepartmentFormController implements Initializable {
         Constraints.setTextFieldMaxLength(txtName, 30);
     }
 
+
     public void updateFormData(){
         if(entity == null){
             throw new IllegalStateException("Entity is null");
@@ -123,6 +156,9 @@ public class DepartmentFormController implements Initializable {
     private void setErrorMessages(Map<String, String> errors){
         Set<String> fields = errors.keySet();
 
+        if(fields.contains("id")){
+            labelErrorId.setText(errors.get("id"));
+        }
         if(fields.contains("name")){
             labelErrorName.setText(errors.get("name"));
         }

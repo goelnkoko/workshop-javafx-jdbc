@@ -23,4 +23,8 @@ public class DepartmentService {
             dao.update(obj);
         }
     }
+
+    public Department findById(Integer id){
+        return dao.findById(id);
+    }
 }

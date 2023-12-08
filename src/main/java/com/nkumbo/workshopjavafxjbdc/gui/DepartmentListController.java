@@ -44,15 +44,24 @@ public class DepartmentListController implements Initializable, DataChangeListen
     @FXML
     private Button btNew;
 
+    @FXML
+    private Button btEdit;
+
     private ObservableList<Department> obsList;
 
     @FXML
     public void onBtNewAction(ActionEvent event){
         Stage parentStage = Utils.currentStage(event);
         Department obj = new Department();
-        createDialogForm(obj,"/com/nkumbo/workshopjavafxjbdc/gui/DepartmentForm.fxml", parentStage);
+        createDialogForm(obj,"/com/nkumbo/workshopjavafxjbdc/gui/DepartmentForm.fxml", parentStage, false);
     }
 
+    @FXML
+    public void onBtEditAction(ActionEvent event){
+        Stage parentStage = Utils.currentStage(event);
+        Department obj = new Department();
+        createDialogForm(obj, "/com/nkumbo/workshopjavafxjbdc/gui/DepartmentForm.fxml", parentStage, true);
+    }
     public void setDepartmentService(DepartmentService service) {
         this.service = service;
     }
@@ -80,7 +89,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
         initEditButtons();
     }
 
-    private void createDialogForm(Department obj, String absoluteName, Stage parentStage){
+    private void createDialogForm(Department obj, String absoluteName, Stage parentStage, Boolean editable){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(absoluteName));
             Pane pane = fxmlLoader.load();
@@ -88,6 +97,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
             DepartmentFormController controller = fxmlLoader.getController();
             controller.setDepartment(obj);
             controller.setDepartmentService(new DepartmentService());
+            controller.setTxtIdEditable(editable);
             controller.subscribeDataChangeListener(this);
             controller.updateFormData();
 
@@ -123,7 +133,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
                 setGraphic(button);
                 button.setOnAction(
                         event -> createDialogForm(
-                                obj, "/com/nkumbo/workshopjavafxjbdc/gui/DepartmentForm.fxml",Utils.currentStage(event)));
+                                obj, "/com/nkumbo/workshopjavafxjbdc/gui/DepartmentForm.fxml",Utils.currentStage(event), true));
             }
         });
     }
