@@ -12,11 +12,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
 import java.util.List;
@@ -64,14 +69,14 @@ public class SellerListController implements Initializable, DataChangeListener {
     public void onBtNewAction(ActionEvent event){
         Stage parentStage = Utils.currentStage(event);
         Seller obj = new Seller();
-        //createDialogForm(obj,"/com/nkumbo/workshopjavafxjbdc/gui/SellerForm.fxml", parentStage, false);
+        createDialogForm(obj,"/com/nkumbo/workshopjavafxjbdc/gui/SellerForm.fxml", parentStage, false);
     }
 
     @FXML
     public void onBtEditAction(ActionEvent event){
         Stage parentStage = Utils.currentStage(event);
         Seller obj = new Seller();
-        //createDialogForm(obj, "/com/nkumbo/workshopjavafxjbdc/gui/SellerForm.fxml", parentStage, true);
+        createDialogForm(obj, "/com/nkumbo/workshopjavafxjbdc/gui/SellerForm.fxml", parentStage, true);
     }
     public void setSellerService(SellerService service) {
         this.service = service;
@@ -105,7 +110,7 @@ public class SellerListController implements Initializable, DataChangeListener {
         initRemoveButtons();
     }
 
-/*    private void createDialogForm(Seller obj, String absoluteName, Stage parentStage, Boolean editable){
+    private void createDialogForm(Seller obj, String absoluteName, Stage parentStage, Boolean editable){
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(absoluteName));
             Pane pane = fxmlLoader.load();
@@ -128,7 +133,7 @@ public class SellerListController implements Initializable, DataChangeListener {
         catch (IOException e){
             Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
-    }*/
+    }
 
     @Override
     public void onDataChanged() {
@@ -147,9 +152,9 @@ public class SellerListController implements Initializable, DataChangeListener {
                     return;
                 }
                 setGraphic(button);
-                /*button.setOnAction(
+                button.setOnAction(
                         event -> createDialogForm(
-                                obj, "/com/nkumbo/workshopjavafxjbdc/gui/SellerForm.fxml",Utils.currentStage(event), true));*/
+                                obj, "/com/nkumbo/workshopjavafxjbdc/gui/SellerForm.fxml",Utils.currentStage(event), false));
             }
         });
     }

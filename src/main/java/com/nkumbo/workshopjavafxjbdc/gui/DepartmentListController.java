@@ -139,7 +139,7 @@ public class DepartmentListController implements Initializable, DataChangeListen
                 setGraphic(button);
                 button.setOnAction(
                         event -> createDialogForm(
-                                obj, "/com/nkumbo/workshopjavafxjbdc/gui/DepartmentForm.fxml",Utils.currentStage(event), true));
+                                obj, "/com/nkumbo/workshopjavafxjbdc/gui/DepartmentForm.fxml",Utils.currentStage(event), false));
             }
         });
     }
