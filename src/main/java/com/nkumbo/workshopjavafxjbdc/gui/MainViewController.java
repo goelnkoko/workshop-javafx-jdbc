@@ -3,6 +3,7 @@ package com.nkumbo.workshopjavafxjbdc.gui;
 import com.nkumbo.workshopjavafxjbdc.application.Main;
 import com.nkumbo.workshopjavafxjbdc.gui.util.Alerts;
 import com.nkumbo.workshopjavafxjbdc.model.services.DepartmentService;
+import com.nkumbo.workshopjavafxjbdc.model.services.SellerService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -31,7 +32,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     private void onMenuItemSellerAction(){
-        System.out.println("Seller");
+        loadView("/com/nkumbo/workshopjavafxjbdc/gui/SellerList.fxml", (SellerListController controller) -> {
+            controller.setSellerService(new SellerService());
+            controller.updateTableView();
+        });
     }
 
     @FXML

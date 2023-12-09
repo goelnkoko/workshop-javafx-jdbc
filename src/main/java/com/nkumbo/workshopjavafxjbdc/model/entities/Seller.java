@@ -15,7 +15,7 @@ public class Seller implements Serializable {
 
     private Department department;
 
-    public Seller(String nkoko, String mail, String s, double v, Department department){
+    public Seller(){
 
     }
 

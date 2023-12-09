@@ -5,7 +5,6 @@ import com.nkumbo.workshopjavafxjbdc.gui.listeners.DataChangeListener;
 import com.nkumbo.workshopjavafxjbdc.gui.util.Alerts;
 import com.nkumbo.workshopjavafxjbdc.gui.util.Constraints;
 import com.nkumbo.workshopjavafxjbdc.gui.util.Utils;
-import com.nkumbo.workshopjavafxjbdc.model.dao.impl.DepartmentDaoJDBC;
 import com.nkumbo.workshopjavafxjbdc.model.entities.Department;
 import com.nkumbo.workshopjavafxjbdc.model.exceptions.ValidationException;
 import com.nkumbo.workshopjavafxjbdc.model.services.DepartmentService;
