@@ -23,7 +23,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -92,6 +92,7 @@ public class SellerListController implements Initializable, DataChangeListener {
         tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         tableColumnBirthDate.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
+
         Utils.formatTableColumnDate(tableColumnBirthDate, "dd/MM/yyyy");
         tableColumnBaseSalary.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
         Stage stage = (Stage) Main.getMainScene().getWindow();
