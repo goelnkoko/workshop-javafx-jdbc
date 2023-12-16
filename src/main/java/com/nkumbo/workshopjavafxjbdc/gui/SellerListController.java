@@ -5,10 +5,13 @@ import com.nkumbo.workshopjavafxjbdc.database.DbIntegrityException;
 import com.nkumbo.workshopjavafxjbdc.gui.listeners.DataChangeListener;
 import com.nkumbo.workshopjavafxjbdc.gui.util.Alerts;
 import com.nkumbo.workshopjavafxjbdc.gui.util.Utils;
+import com.nkumbo.workshopjavafxjbdc.model.entities.Department;
 import com.nkumbo.workshopjavafxjbdc.model.entities.Seller;
 import com.nkumbo.workshopjavafxjbdc.model.services.DepartmentService;
 import com.nkumbo.workshopjavafxjbdc.model.services.SellerService;
 import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -21,6 +24,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 import java.io.IOException;
 import java.net.URL;
@@ -38,23 +42,18 @@ public class SellerListController implements Initializable, DataChangeListener {
 
     @FXML
     private TableColumn<Seller, Integer> tableColumnId;
-
     @FXML
     private TableColumn<Seller, String> tableColumnName;
-
     @FXML
     private TableColumn<Seller, String> tableColumnEmail;
-
     @FXML
     private TableColumn<Seller, Date> tableColumnBirthDate;
-
     @FXML
     private TableColumn<Seller, Double> tableColumnBaseSalary;
-
-
+    @FXML
+    private TableColumn<Seller, String> tableColumnDepartment;
     @FXML
     private TableColumn<Seller, Seller> tableColumnEDIT;
-
     @FXML
     private TableColumn<Seller, Seller> tableColumnREMOVE;
 
@@ -93,6 +92,12 @@ public class SellerListController implements Initializable, DataChangeListener {
         tableColumnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         tableColumnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         tableColumnBirthDate.setCellValueFactory(new PropertyValueFactory<>("birthDate"));
+        tableColumnDepartment.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<Seller, String>, ObservableValue<String>>() {
+            @Override
+            public ObservableValue<String> call(TableColumn.CellDataFeatures<Seller, String> param) {
+                return new SimpleStringProperty(param.getValue().getDepartment().getName());
+            }
+        });
 
         Utils.formatTableColumnDate(tableColumnBirthDate, "dd/MM/yyyy");
         tableColumnBaseSalary.setCellValueFactory(new PropertyValueFactory<>("baseSalary"));
